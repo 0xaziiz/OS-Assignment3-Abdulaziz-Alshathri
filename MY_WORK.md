@@ -32,11 +32,11 @@
 
 | Field | Your Answer |
 |-------|-------------|
-| **Full Name** | [Write your full name here] |
-| **Student ID** | [Write your student ID here] |
-| **University Email** | [yourid]@std.psau.edu.sa |
-| **GitHub Username** | [your-github-username] |
-| **Repository Link** | [Paste your repository link here] |
+| **Full Name** | Abdulaziz Alshathri |
+| **Student ID** | 446050854 |
+| **University Email** | 446050854@std.psau.edu.sa |
+| **GitHub Username** | 0xaziiz |
+| **Repository Link** | https://github.com/0xaziiz/OS-Assignment3-Abdulaziz-Alshathri |
  
 ---
 
@@ -132,16 +132,22 @@
 
 ## Your Development Log
 
-### Entry 1 - [Date and Time]
-**What I did**:
+### Entry 1 - November 22, 2026, 09:21 PM (Asia/Riyadh)
+**What I did**: With AI assistance, integrated Feature 1 into the submission branch after the separate student-ID setup commit.
 
 **Details**:
+- Set student ID 446050854 and retained the original starter output in evidence/starter-output.txt.
+- Added one ReentrantLock queueLock protecting list and map in add(), poll(), processOf() and snapshot(); every unlock is in finally.
+- Reviewed and integrated the queue-only draft prepared earlier on November 22. The full earlier AI-assisted draft remains on the local prepared-solution-2026-11-22 branch; later features are not part of this commit.
+- Compiled the queue-only version and repeated five actual runs for this integration; raw outputs and results are in evidence/feature1-run-*.txt and evidence/feature1-results.json.
+- All five runs logged each of the 10 processes finishing exactly once and all 23 quanta, with no exceptions. Run 3 reached the watchdog with completedProcessCount = 9 despite all 10 finish messages; the unprotected counter lost an update, an expected Feature 2 issue. The other four runs exited normally; statistics mismatches and busy polling remain.
+- The student requested the Feature 1 commit on the same date as setup; future sessions must use their actual dates. Personal reflection answers remain pending student understanding and review.
 
-**Challenges**:
+**Challenges**: The starter snapshot could race with queue changes. Queue protection does not fix the independent statistics races or busy polling.
 
-**Solution**:
+**Solution**: Used the same queue lock for all four methods and retained the remaining failures for Features 2 and 3; did not change RaceWindow, Config or verification.
 
-**Time spent**:
+**Time spent**: The integration test session started at 09:20 PM and this entry was updated at 09:21 PM; earlier draft preparation was a separate session on the same date.
 
 ---
 

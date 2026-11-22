@@ -1,0 +1,77 @@
+[
+  {
+    "run": 1,
+    "exit_code": 0,
+    "seconds": 6.16,
+    "checks": [
+      "Context switches (quanta executed)     expected 23       observed 20       \u2718 MISMATCH",
+      "Completed processes                    expected 10       observed 10       \u2714",
+      "Total service time (ms)                expected 85774    observed 65774    \u2718 MISMATCH",
+      "Busy-waiting polls (must be 0)         expected 0        observed 36       \u2718 MISMATCH"
+    ],
+    "exception": false,
+    "watchdog": false,
+    "unique_processes_finished": 10,
+    "quanta_executed_in_log": 23
+  },
+  {
+    "run": 2,
+    "exit_code": 0,
+    "seconds": 6.09,
+    "checks": [
+      "Context switches (quanta executed)     expected 23       observed 21       \u2718 MISMATCH",
+      "Completed processes                    expected 10       observed 10       \u2714",
+      "Total service time (ms)                expected 85774    observed 75774    \u2718 MISMATCH",
+      "Busy-waiting polls (must be 0)         expected 0        observed 26       \u2718 MISMATCH"
+    ],
+    "exception": false,
+    "watchdog": false,
+    "unique_processes_finished": 10,
+    "quanta_executed_in_log": 23
+  },
+  {
+    "run": 3,
+    "exit_code": 1,
+    "seconds": 32.24,
+    "checks": [
+      "Context switches (quanta executed)     expected 23       observed 21       \u2718 MISMATCH",
+      "Completed processes                    expected 10       observed 9        \u2718 MISMATCH",
+      "Total service time (ms)                expected 85774    observed 75774    \u2718 MISMATCH",
+      "Busy-waiting polls (must be 0)         expected 0        observed 3309     \u2718 MISMATCH"
+    ],
+    "exception": false,
+    "watchdog": true,
+    "unique_processes_finished": 10,
+    "quanta_executed_in_log": 23
+  },
+  {
+    "run": 4,
+    "exit_code": 0,
+    "seconds": 6.02,
+    "checks": [
+      "Context switches (quanta executed)     expected 23       observed 21       \u2718 MISMATCH",
+      "Completed processes                    expected 10       observed 10       \u2714",
+      "Total service time (ms)                expected 85774    observed 65774    \u2718 MISMATCH",
+      "Busy-waiting polls (must be 0)         expected 0        observed 16       \u2718 MISMATCH"
+    ],
+    "exception": false,
+    "watchdog": false,
+    "unique_processes_finished": 10,
+    "quanta_executed_in_log": 23
+  },
+  {
+    "run": 5,
+    "exit_code": 0,
+    "seconds": 6.03,
+    "checks": [
+      "Context switches (quanta executed)     expected 23       observed 21       \u2718 MISMATCH",
+      "Completed processes                    expected 10       observed 10       \u2714",
+      "Total service time (ms)                expected 85774    observed 75774    \u2718 MISMATCH",
+      "Busy-waiting polls (must be 0)         expected 0        observed 15       \u2718 MISMATCH"
+    ],
+    "exception": false,
+    "watchdog": false,
+    "unique_processes_finished": 10,
+    "quanta_executed_in_log": 23
+  }
+]

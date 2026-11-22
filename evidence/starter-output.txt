@@ -1,0 +1,59 @@
+
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║           CONCURRENT CPU SCHEDULER SIMULATION (ASSIGNMENT 3 - SYNCHRONIZATION)          ║
+╠═══════════════════════════════════════════════════════════════════════════════════════╣
+║  Processes:       10                                                                  ║
+║  Time Quantum:    5000ms (nominal, simulated 5x faster)                               ║
+║  CPUs:            3                                                                   ║
+║  Student ID:      446050854                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+
+  ➕ P1 (Priority: 2) added to ready queue │ Remaining: 6882ms of 6882ms
+  ➕ P2 (Priority: 1) added to ready queue │ Remaining: 11243ms of 11243ms
+  ➕ P3 (Priority: 4) added to ready queue │ Remaining: 9205ms of 9205ms
+  ➕ P4 (Priority: 9) added to ready queue │ Remaining: 3850ms of 3850ms
+  ➕ P5 (Priority: 6) added to ready queue │ Remaining: 11459ms of 11459ms
+  ➕ P6 (Priority: 2) added to ready queue │ Remaining: 7298ms of 7298ms
+  ➕ P7 (Priority: 1) added to ready queue │ Remaining: 11609ms of 11609ms
+  ➕ P8 (Priority: 5) added to ready queue │ Remaining: 10356ms of 10356ms
+  ➕ P9 (Priority: 8) added to ready queue │ Remaining: 10823ms of 10823ms
+  ➕ P10 (Priority: 10) added to ready queue │ Remaining: 3049ms of 3049ms
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  ▶  3 CPUs STARTING (CONCURRENT SCHEDULER)  ◀                    ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+Exception in thread "CPU-1" Exception in thread "CPU-3" Exception in thread "CPU-2" java.lang.NullPointerException: Cannot read field "next" because "this.next" is null
+	at java.base/java.util.LinkedList$ListItr.next(LinkedList.java:905)
+	at ReadyQueue.snapshot(SchedulerSimulationSync.java:151)
+	at CpuWorker.run(SchedulerSimulationSync.java:280)
+java.lang.NullPointerException: Cannot read field "next" because "this.next" is null
+	at java.base/java.util.LinkedList$ListItr.next(LinkedList.java:905)
+	at ReadyQueue.snapshot(SchedulerSimulationSync.java:151)
+	at CpuWorker.run(SchedulerSimulationSync.java:280)
+java.lang.NullPointerException: Cannot read field "next" because "this.next" is null
+	at java.base/java.util.LinkedList$ListItr.next(LinkedList.java:905)
+	at ReadyQueue.snapshot(SchedulerSimulationSync.java:151)
+	at CpuWorker.run(SchedulerSimulationSync.java:280)
+
+═══ VERIFICATION (expected values are computed from YOUR seed) ═══
+  Context switches (quanta executed)     expected ٢٣       observed ٠        ✘ MISMATCH
+  Completed processes                    expected ١٠       observed ٠        ✘ MISMATCH
+  Total service time (ms)                expected ٨٥٧٧٤    observed ٠        ✘ MISMATCH
+  Busy-waiting polls (must be 0)         expected ٠        observed ٠        ✔
+  ✘ At least one check failed (see the ✘ lines above): a race condition or busy waiting is still present.
+
+═══ Process Summary Table (nominal ms) ═══
+Process   Priority  Burst       Waiting       Turnaround   
+──────────────────────────────────────────────────────────
+P1        ٢         ٦٨٨٢        ٠             ٠            
+P2        ١         ١١٢٤٣       ٠             ٠            
+P3        ٤         ٩٢٠٥        ٠             ٠            
+P4        ٩         ٣٨٥٠        ٠             ٠            
+P5        ٦         ١١٤٥٩       ٠             ٠            
+P6        ٢         ٧٢٩٨        ٠             ٠            
+P7        ١         ١١٦٠٩       ٠             ٠            
+P8        ٥         ١٠٣٥٦       ٠             ٠            
+P9        ٨         ١٠٨٢٣       ٠             ٠            
+P10       ١٠        ٣٠٤٩        ٠             ٠            
+
