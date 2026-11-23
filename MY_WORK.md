@@ -151,16 +151,22 @@
 
 ---
 
-### Entry 2 - [Date and Time]
-**What I did**:
+### Entry 2 - November 23, 2026, 09:02 PM (Asia/Riyadh)
+**What I did**: With AI assistance, reviewed and integrated Feature 2 (statistics locks) into the submission branch.
 
 **Details**:
+- Used the AI-assisted draft prepared on November 22 as input; this entry records today's actual review, integration and fresh testing, not a new preparation date for that draft.
+- Added contextLock, completedLock and serviceLock. Each update and its getter use the same lock with try/finally, protecting all six methods.
+- Chose one lock per independent counter so unrelated statistics updates can proceed concurrently. This costs three lock objects and requires consistently pairing each reader with its writer; methods do not nest the locks. The queue keeps its separate lock.
+- Compiled and ran the statistics-stage version five consecutive times; all runs exited normally without exceptions or watchdog.
+- All runs reported 23 context switches, 10 completed processes and 85774 ms service time, matching expected values. Busy-wait polls were 35, 8, 25, 8 and 8; eliminating polling remains Feature 3.
+- Saved raw outputs in evidence/feature2-run-1.txt through feature2-run-5.txt and the summary in evidence/feature2-results.json. Verified that source changes are confined to SharedStats; protected starter sections and Feature 1 remain unchanged.
 
-**Challenges**:
+**Challenges**: Feature 1's run 3 logged all ten process completions but the unprotected completed counter reported nine, causing the watchdog. Protecting writers alone would also leave readers without the corresponding lock.
 
-**Solution**:
+**Solution**: Protected both the read-modify-write operations and matching getters with dedicated locks, retained RaceWindow.pause(), and verified the three statistics in five fresh runs. Personal reflection remains pending student review.
 
-**Time spent**:
+**Time spent**: Today's integration and validation session ran from 09:01:35 PM to 09:02:27 PM (52 seconds), excluding earlier draft preparation.
 
 ---
 

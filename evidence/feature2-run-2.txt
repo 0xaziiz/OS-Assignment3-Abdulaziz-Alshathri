@@ -1,0 +1,152 @@
+
+╔═══════════════════════════════════════════════════════════════════════════════════════╗
+║           CONCURRENT CPU SCHEDULER SIMULATION (ASSIGNMENT 3 - SYNCHRONIZATION)          ║
+╠═══════════════════════════════════════════════════════════════════════════════════════╣
+║  Processes:       10                                                                  ║
+║  Time Quantum:    5000ms (nominal, simulated 5x faster)                               ║
+║  CPUs:            3                                                                   ║
+║  Student ID:      446050854                                                           ║
+╚═══════════════════════════════════════════════════════════════════════════════════════╝
+
+  ➕ P1 (Priority: 2) added to ready queue │ Remaining: 6882ms of 6882ms
+  ➕ P2 (Priority: 1) added to ready queue │ Remaining: 11243ms of 11243ms
+  ➕ P3 (Priority: 4) added to ready queue │ Remaining: 9205ms of 9205ms
+  ➕ P4 (Priority: 9) added to ready queue │ Remaining: 3850ms of 3850ms
+  ➕ P5 (Priority: 6) added to ready queue │ Remaining: 11459ms of 11459ms
+  ➕ P6 (Priority: 2) added to ready queue │ Remaining: 7298ms of 7298ms
+  ➕ P7 (Priority: 1) added to ready queue │ Remaining: 11609ms of 11609ms
+  ➕ P8 (Priority: 5) added to ready queue │ Remaining: 10356ms of 10356ms
+  ➕ P9 (Priority: 8) added to ready queue │ Remaining: 10823ms of 10823ms
+  ➕ P10 (Priority: 10) added to ready queue │ Remaining: 3049ms of 3049ms
+
+╔════════════════════════════════════════════════════════════════════════════════╗
+║                  ▶  3 CPUs STARTING (CONCURRENT SCHEDULER)  ◀                    ║
+╚════════════════════════════════════════════════════════════════════════════════╝
+
+  ┌─ [CPU-1] picks P1 │ Ready queue: [P2 → P3 → P4 → P5 → P6 → P7 → P8 → P9 → P10]
+  ┌─ [CPU-2] picks P3 │ Ready queue: [P4 → P5 → P6 → P7 → P8 → P9 → P10]
+  ┌─ [CPU-3] picks P2 │ Ready queue: [P4 → P5 → P6 → P7 → P8 → P9 → P10]
+  ▶ [CPU-2] P3 (Priority: 4) executing quantum [5000ms]
+  ▶ [CPU-3] P2 (Priority: 1) executing quantum [5000ms]
+  ▶ [CPU-1] P1 (Priority: 2) executing quantum [5000ms]
+  ⏸ [CPU-3] P2 completed quantum 5000ms │ Overall progress: [████████░░░░░░░░░░░░] 44%  remaining: 6243ms
+  ⏸ [CPU-1] P1 completed quantum 5000ms │ Overall progress: [██████████████░░░░░░] 72%  remaining: 1882ms
+  ↻ P1 yields CPU for context switch
+  ↻ P2 yields CPU for context switch
+  ⏸ [CPU-2] P3 completed quantum 5000ms │ Overall progress: [██████████░░░░░░░░░░] 54%  remaining: 4205ms
+  ↻ P3 yields CPU for context switch
+  ➕ P1 (Priority: 2) added to ready queue │ Remaining: 1882ms of 6882ms
+  ┌─ [CPU-1] picks P4 │ Ready queue: [P5 → P6 → P7 → P8 → P9 → P10 → P1]
+  ➕ P2 (Priority: 1) added to ready queue │ Remaining: 6243ms of 11243ms
+  ┌─ [CPU-3] picks P5 │ Ready queue: [P6 → P7 → P8 → P9 → P10 → P1 → P2]
+  ➕ P3 (Priority: 4) added to ready queue │ Remaining: 4205ms of 9205ms
+  ▶ [CPU-1] P4 (Priority: 9) executing quantum [3850ms]
+  ┌─ [CPU-2] picks P6 │ Ready queue: [P7 → P8 → P9 → P10 → P1 → P2 → P3]
+  ▶ [CPU-3] P5 (Priority: 6) executing quantum [5000ms]
+  ▶ [CPU-2] P6 (Priority: 2) executing quantum [5000ms]
+  ⏸ [CPU-1] P4 completed quantum 3850ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P4 finished execution!
+  ┌─ [CPU-1] picks P7 │ Ready queue: [P8 → P9 → P10 → P1 → P2 → P3]
+  ▶ [CPU-1] P7 (Priority: 1) executing quantum [5000ms]
+  ⏸ [CPU-3] P5 completed quantum 5000ms │ Overall progress: [████████░░░░░░░░░░░░] 43%  remaining: 6459ms
+  ↻ P5 yields CPU for context switch
+  ➕ P5 (Priority: 6) added to ready queue │ Remaining: 6459ms of 11459ms
+  ⏸ [CPU-2] P6 completed quantum 5000ms │ Overall progress: [█████████████░░░░░░░] 68%  remaining: 2298ms
+  ↻ P6 yields CPU for context switch
+  ┌─ [CPU-3] picks P8 │ Ready queue: [P9 → P10 → P1 → P2 → P3 → P5]
+  ➕ P6 (Priority: 2) added to ready queue │ Remaining: 2298ms of 7298ms
+  ┌─ [CPU-2] picks P9 │ Ready queue: [P10 → P1 → P2 → P3 → P5 → P6]
+  ▶ [CPU-3] P8 (Priority: 5) executing quantum [5000ms]
+  ▶ [CPU-2] P9 (Priority: 8) executing quantum [5000ms]
+  ⏸ [CPU-1] P7 completed quantum 5000ms │ Overall progress: [████████░░░░░░░░░░░░] 43%  remaining: 6609ms
+  ↻ P7 yields CPU for context switch
+  ➕ P7 (Priority: 1) added to ready queue │ Remaining: 6609ms of 11609ms
+  ┌─ [CPU-1] picks P10 │ Ready queue: [P1 → P2 → P3 → P5 → P6 → P7]
+  ▶ [CPU-1] P10 (Priority: 10) executing quantum [3049ms]
+  ⏸ [CPU-3] P8 completed quantum 5000ms │ Overall progress: [█████████░░░░░░░░░░░] 48%  remaining: 5356ms
+  ↻ P8 yields CPU for context switch
+  ➕ P8 (Priority: 5) added to ready queue │ Remaining: 5356ms of 10356ms
+  ⏸ [CPU-2] P9 completed quantum 5000ms │ Overall progress: [█████████░░░░░░░░░░░] 46%  remaining: 5823ms
+  ↻ P9 yields CPU for context switch
+  ┌─ [CPU-3] picks P1 │ Ready queue: [P2 → P3 → P5 → P6 → P7 → P8]
+  ➕ P9 (Priority: 8) added to ready queue │ Remaining: 5823ms of 10823ms
+  ▶ [CPU-3] P1 (Priority: 2) executing quantum [1882ms]
+  ┌─ [CPU-2] picks P2 │ Ready queue: [P3 → P5 → P6 → P7 → P8 → P9]
+  ▶ [CPU-2] P2 (Priority: 1) executing quantum [5000ms]
+  ⏸ [CPU-3] P1 completed quantum 1882ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P1 finished execution!
+  ┌─ [CPU-3] picks P3 │ Ready queue: [P5 → P6 → P7 → P8 → P9]
+  ▶ [CPU-3] P3 (Priority: 4) executing quantum [4205ms]
+  ⏸ [CPU-1] P10 completed quantum 3049ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P10 finished execution!
+  ┌─ [CPU-1] picks P5 │ Ready queue: [P6 → P7 → P8 → P9]
+  ▶ [CPU-1] P5 (Priority: 6) executing quantum [5000ms]
+  ⏸ [CPU-2] P2 completed quantum 5000ms │ Overall progress: [█████████████████░░░] 88%  remaining: 1243ms
+  ↻ P2 yields CPU for context switch
+  ➕ P2 (Priority: 1) added to ready queue │ Remaining: 1243ms of 11243ms
+  ┌─ [CPU-2] picks P6 │ Ready queue: [P7 → P8 → P9 → P2]
+  ▶ [CPU-2] P6 (Priority: 2) executing quantum [2298ms]
+  ⏸ [CPU-3] P3 completed quantum 4205ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P3 finished execution!
+  ┌─ [CPU-3] picks P7 │ Ready queue: [P8 → P9 → P2]
+  ▶ [CPU-3] P7 (Priority: 1) executing quantum [5000ms]
+  ⏸ [CPU-1] P5 completed quantum 5000ms │ Overall progress: [█████████████████░░░] 87%  remaining: 1459ms
+  ↻ P5 yields CPU for context switch
+  ➕ P5 (Priority: 6) added to ready queue │ Remaining: 1459ms of 11459ms
+  ┌─ [CPU-1] picks P8 │ Ready queue: [P9 → P2 → P5]
+  ▶ [CPU-1] P8 (Priority: 5) executing quantum [5000ms]
+  ⏸ [CPU-2] P6 completed quantum 2298ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P6 finished execution!
+  ┌─ [CPU-2] picks P9 │ Ready queue: [P2 → P5]
+  ▶ [CPU-2] P9 (Priority: 8) executing quantum [5000ms]
+  ⏸ [CPU-3] P7 completed quantum 5000ms │ Overall progress: [█████████████████░░░] 86%  remaining: 1609ms
+  ↻ P7 yields CPU for context switch
+  ➕ P7 (Priority: 1) added to ready queue │ Remaining: 1609ms of 11609ms
+  ┌─ [CPU-3] picks P2 │ Ready queue: [P5 → P7]
+  ▶ [CPU-3] P2 (Priority: 1) executing quantum [1243ms]
+  ⏸ [CPU-1] P8 completed quantum 5000ms │ Overall progress: [███████████████████░] 96%  remaining: 356ms
+  ↻ P8 yields CPU for context switch
+  ➕ P8 (Priority: 5) added to ready queue │ Remaining: 356ms of 10356ms
+  ┌─ [CPU-1] picks P5 │ Ready queue: [P7 → P8]
+  ▶ [CPU-1] P5 (Priority: 6) executing quantum [1459ms]
+  ⏸ [CPU-2] P9 completed quantum 5000ms │ Overall progress: [██████████████████░░] 92%  remaining: 823ms
+  ↻ P9 yields CPU for context switch
+  ➕ P9 (Priority: 8) added to ready queue │ Remaining: 823ms of 10823ms
+  ┌─ [CPU-2] picks P7 │ Ready queue: [P8 → P9]
+  ▶ [CPU-2] P7 (Priority: 1) executing quantum [1609ms]
+  ⏸ [CPU-3] P2 completed quantum 1243ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P2 finished execution!
+  ┌─ [CPU-3] picks P8 │ Ready queue: [P9]
+  ▶ [CPU-3] P8 (Priority: 5) executing quantum [356ms]
+  ⏸ [CPU-3] P8 completed quantum 356ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P8 finished execution!
+  ┌─ [CPU-3] picks P9 │ Ready queue: [empty]
+  ▶ [CPU-3] P9 (Priority: 8) executing quantum [823ms]
+  ⏸ [CPU-1] P5 completed quantum 1459ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P5 finished execution!
+  ⏸ [CPU-3] P9 completed quantum 823ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P9 finished execution!
+  ⏸ [CPU-2] P7 completed quantum 1609ms │ Overall progress: [████████████████████] 100%  remaining: 0ms
+  ✓ P7 finished execution!
+
+═══ VERIFICATION (expected values are computed from YOUR seed) ═══
+  Context switches (quanta executed)     expected 23       observed 23       ✔
+  Completed processes                    expected 10       observed 10       ✔
+  Total service time (ms)                expected 85774    observed 85774    ✔
+  Busy-waiting polls (must be 0)         expected 0        observed 8        ✘ MISMATCH
+  ✘ At least one check failed (see the ✘ lines above): a race condition or busy waiting is still present.
+
+═══ Process Summary Table (nominal ms) ═══
+Process   Priority  Burst       Waiting       Turnaround   
+──────────────────────────────────────────────────────────
+P1        2         6882        10218         17100        
+P2        1         11243       16442         27685        
+P3        4         9205        12145         21350        
+P4        9         3850        5135          8985         
+P5        6         11459       17241         28700        
+P6        2         7298        15282         22580        
+P7        1         11609       17661         29270        
+P8        5         10356       17729         28085        
+P9        8         10823       18137         28960        
+P10       10        3049        14066         17115        
+
