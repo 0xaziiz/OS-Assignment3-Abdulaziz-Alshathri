@@ -132,41 +132,38 @@
 
 ## Your Development Log
 
-### Entry 1 - November 22, 2026, 09:21 PM (Asia/Riyadh)
-**What I did**: With AI assistance, integrated Feature 1 into the submission branch after the separate student-ID setup commit.
+### Entry 1 - November 22, 2026, 9:21 PM
+**What I did**: Set the student ID and added the ready queue lock.
 
 **Details**:
-- Set student ID 446050854 and retained the original starter output in evidence/starter-output.txt.
-- Added one ReentrantLock queueLock protecting list and map in add(), poll(), processOf() and snapshot(); every unlock is in finally.
-- Reviewed and integrated the queue-only draft prepared earlier on November 22. The full earlier AI-assisted draft remains on the local prepared-solution-2026-11-22 branch; later features are not part of this commit.
-- Compiled the queue-only version and repeated five actual runs for this integration; raw outputs and results are in evidence/feature1-run-*.txt and evidence/feature1-results.json.
-- All five runs logged each of the 10 processes finishing exactly once and all 23 quanta, with no exceptions. Run 3 reached the watchdog with completedProcessCount = 9 despite all 10 finish messages; the unprotected counter lost an update, an expected Feature 2 issue. The other four runs exited normally; statistics mismatches and busy polling remain.
-- The student requested the Feature 1 commit on the same date as setup; future sessions must use their actual dates. Personal reflection answers remain pending student understanding and review.
+- Set student ID 446050854 and saved the starter output.
+- Protected add(), poll(), processOf() and snapshot() with queueLock and try/finally.
+- Tested the queue version five times. Each process finished once, with no queue exceptions.
+- Run 3 reached the watchdog because the completed counter reported 9 although all 10 processes finished. The statistics still needed locks.
 
-**Challenges**: The starter snapshot could race with queue changes. Queue protection does not fix the independent statistics races or busy polling.
+**Challenges**: Queue operations could overlap, and the statistics could lose updates.
 
-**Solution**: Used the same queue lock for all four methods and retained the remaining failures for Features 2 and 3; did not change RaceWindow, Config or verification.
+**Solution**: Used the same lock for the queue list and map. Left statistics protection for Feature 2.
 
-**Time spent**: The integration test session started at 09:20 PM and this entry was updated at 09:21 PM; earlier draft preparation was a separate session on the same date.
+**Time spent**: Testing and review from 9:20 PM to 9:21 PM, after the earlier preparation session.
 
 ---
 
-### Entry 2 - November 23, 2026, 09:02 PM (Asia/Riyadh)
-**What I did**: With AI assistance, reviewed and integrated Feature 2 (statistics locks) into the submission branch.
+### Entry 2 - November 23, 2026, 9:02 PM
+**What I did**: Added locks to the shared statistics and their getters.
 
 **Details**:
-- Used the AI-assisted draft prepared on November 22 as input; this entry records today's actual review, integration and fresh testing, not a new preparation date for that draft.
-- Added contextLock, completedLock and serviceLock. Each update and its getter use the same lock with try/finally, protecting all six methods.
-- Chose one lock per independent counter so unrelated statistics updates can proceed concurrently. This costs three lock objects and requires consistently pairing each reader with its writer; methods do not nest the locks. The queue keeps its separate lock.
-- Compiled and ran the statistics-stage version five consecutive times; all runs exited normally without exceptions or watchdog.
-- All runs reported 23 context switches, 10 completed processes and 85774 ms service time, matching expected values. Busy-wait polls were 35, 8, 25, 8 and 8; eliminating polling remains Feature 3.
-- Saved raw outputs in evidence/feature2-run-1.txt through feature2-run-5.txt and the summary in evidence/feature2-results.json. Verified that source changes are confined to SharedStats; protected starter sections and Feature 1 remain unchanged.
+- Added contextLock, completedLock and serviceLock, with matching locks for each update and getter.
+- Used separate locks because the three counters are independent. Each lock is released in finally, and the locks are not nested.
+- Five runs matched 23 context switches, 10 completed processes and 85774 ms service time.
+- Busy-wait polls were 35, 8, 25, 8 and 8. Removing polling remained for Feature 3.
+- Saved the outputs in evidence/feature2-run-1.txt through feature2-run-5.txt.
 
-**Challenges**: Feature 1's run 3 logged all ten process completions but the unprotected completed counter reported nine, causing the watchdog. Protecting writers alone would also leave readers without the corresponding lock.
+**Challenges**: Protecting updates alone would leave the getters unprotected.
 
-**Solution**: Protected both the read-modify-write operations and matching getters with dedicated locks, retained RaceWindow.pause(), and verified the three statistics in five fresh runs. Personal reflection remains pending student review.
+**Solution**: Used the same lock for each counter's update and read, then checked the three statistics in five runs.
 
-**Time spent**: Today's integration and validation session ran from 09:01:35 PM to 09:02:27 PM (52 seconds), excluding earlier draft preparation.
+**Time spent**: About 1 minute for this integration and test session, after the earlier preparation.
 
 ---
 
@@ -187,16 +184,20 @@
 
 ---
 
-### Entry 4 - [Date and Time]
-**What I did**:
+### Entry 4 - November 25, 2026, 1:57 PM
+**What I did**: Integrated the semaphore feature into the main checkout, repeated the final tests and reviewed the development log.
 
 **Details**:
+- Compiled the final version and ran it five times. All four checks passed in every run, with zero busy-wait polls, no exception and no watchdog.
+- Saved today's outputs in evidence/final-run-1.txt through final-run-5.txt and evidence/final-results.json.
+- Checked that RaceWindow, Config, Process, the statistics code, main and verification were unchanged by Feature 3.
+- Shortened the log entries and kept dates, test results and the remaining documentation tasks.
 
-**Challenges**:
+**Challenges**: The semaphore feature had been tested separately but was not yet in the main checkout.
 
-**Solution**:
+**Solution**: Integrated it, checked the source changes and repeated the five final runs before committing.
 
-**Time spent**:
+**Time spent**: Review and validation from 1:56 PM to 1:57 PM.
 
 ---
 
