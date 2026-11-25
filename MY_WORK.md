@@ -170,16 +170,20 @@
 
 ---
 
-### Entry 3 - [Date and Time]
-**What I did**:
+### Entry 3 - November 24, 2026, 9:06 PM
+**What I did**: Prepared and tested Feature 3, the counting semaphore.
 
 **Details**:
+- Initialized the semaphore to zero and released one permit after adding a process.
+- Replaced repeated polling with a blocking wait outside the queue lock.
+- Added shutdown signals so waiting CPUs can stop after all processes finish.
+- Five runs passed all four checks: 23 context switches, 10 completed processes, 85774 ms service time and zero busy-wait polls.
 
-**Challenges**:
+**Challenges**: A CPU waiting for work needs a signal when all work has finished.
 
-**Solution**:
+**Solution**: Wake the waiting CPUs and check completion before taking another process.
 
-**Time spent**:
+**Time spent**: About 1 minute for this implementation and test session.
 
 ---
 
