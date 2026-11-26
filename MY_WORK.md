@@ -201,29 +201,35 @@
 
 ---
 
-### Entry 5 - [Date and Time]
-**What I did**:
+### Entry 5 - November 25, 2026, 2:37 PM
+**What I did**: Drafted the reflection and technical answers.
 
 **Details**:
+- Wrote the answers in MY_WORK.md.
+- Checked the technical answers against the code and saved output.
+- Added the starter and final verification blocks and the lock table.
+- Shortened the answers using simpler sentences.
 
-**Challenges**:
+**Challenges**: Keeping the answers short while covering every part of the questions.
 
-**Solution**:
+**Solution**: Used simple sentences and examples from the program.
 
-**Time spent**:
+**Time spent**: Writing and review from 2:22 PM to 2:37 PM.
 
 ---
 
-### Entry 6 - [Optional - Date and Time]
-**What I did**:
+### Entry 6 - November 26, 2026, 7:40 PM
+**What I did**: Recorded the demo and reviewed the assignment documentation before uploading it.
 
 **Details**:
+- Recorded the code walkthrough and showed the program running in VS Code.
+- Reviewed the development log, reflection answers and technical answers before committing them.
 
-**Challenges**:
+**Challenges**: Showing the three features and their results in a short video.
 
-**Solution**:
+**Solution**: Followed the order of the assignment: introduction, code walkthrough, program run, synchronization concept and commit history.
 
-**Time spent**:
+**Time spent**: Documentation review from 7:40 PM to 7:40 PM. Recording time was not tracked.
 
 ---
 
@@ -231,13 +237,13 @@
 
 > 💡 **TIP:** Fill this in **last**, after all entries are written.
 
-**Total time spent on assignment**: [X hours]
+**Total time spent on assignment**: The timed sessions are listed above. A full total was not tracked.
 
-**Most challenging part**:
+**Most challenging part**: Waking the CPUs that were still waiting when all processes finished.
 
-**Most interesting learning**:
+**Most interesting learning**: A semaphore lets CPUs wait for work without repeatedly checking the queue.
 
-**What I would do differently next time**:
+**What I would do differently next time**: Check the shutdown case earlier, including what happens when the queue is empty.
 
 ---
 
@@ -257,7 +263,7 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I learned that threads can change shared data at the same time. This can give wrong results. I used locks to protect the queue and counters. I used finally to release each lock safely. The semaphore lets CPUs wait until work is available.
 
 ## Question 2: What was the most challenging part of this assignment?
 
@@ -265,7 +271,7 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+The hardest part was stopping the CPUs after adding the semaphore. A CPU may still be waiting when all processes finish. No new process will arrive to wake it up. The waiting CPUs need a shutdown signal. After waking up, they check the completed count and stop.
 
 ## Question 3: How did you overcome the challenges you faced?
 
@@ -273,7 +279,7 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+I worked on one feature at a time. First, I fixed the queue. Then I protected the counters and added the semaphore. I tested each feature five times. The final five runs passed all four checks.
 
 ## Question 4: Where can synchronization concepts be applied in real-world applications?
 
@@ -281,7 +287,7 @@
 
 **Your Answer:** *(5-7 sentences)*
 
-[Write your answer here.]
+Synchronization is useful when many users share the same data. Banks need it to protect balance updates. Booking systems need it to stop two users taking the same seat. Printers can wait for jobs using a semaphore. These examples work like the shared queue and counters in this program.
 
 ### Optional: What would you like to learn more about?
 
@@ -315,20 +321,35 @@
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+The starter crashed in ReadyQueue.snapshot() with a NullPointerException. The first three values were zero instead of 23, 10 and 85774. For a lost-update example, threads on CPU-1 and CPU-2 both read contextSwitchCount as 12 and pause. Both then write 13, so one increment is lost and the result should be 14. This can happen without RaceWindow because real threads can pause between reading and writing, making the bug depend on timing.
 
 Verification block of the **original starter**:
 ```
-[Paste the verification block (or the exception/watchdog message) of the starter here]
+═══ VERIFICATION (expected values are computed from YOUR seed) ═══
+  Context switches (quanta executed)     expected ٢٣       observed ٠        ✘ MISMATCH
+  Completed processes                    expected ١٠       observed ٠        ✘ MISMATCH
+  Total service time (ms)                expected ٨٥٧٧٤    observed ٠        ✘ MISMATCH
+  Busy-waiting polls (must be 0)         expected ٠        observed ٠        ✔
+  ✘ At least one check failed (see the ✘ lines above): a race condition or busy waiting is still present.
 ```
 
 Verification block of **my final version**:
 ```
-[Paste the verification block of your final version here (all lines ✔)]
+═══ VERIFICATION (expected values are computed from YOUR seed) ═══
+  Context switches (quanta executed)     expected 23       observed 23       ✔
+  Completed processes                    expected 10       observed 10       ✔
+  Total service time (ms)                expected 85774    observed 85774    ✔
+  Busy-waiting polls (must be 0)         expected 0        observed 0        ✔
+  ✔ All shared values are consistent.
 ```
 
 **Explanation of the timeline:**
-[Explain the lost update step by step.]
+This is an example of a possible lost update, not a trace of the crashed starter run:
+1. The process thread on CPU-1 reads 12 and pauses.
+2. The process thread on CPU-2 also reads 12.
+3. The first thread writes 13.
+4. The second thread writes 13, overwriting the same result.
+5. Two increments should produce 14, but the counter is only 13.
 
 ## Question 2: Critical Sections and Lock Granularity
 
@@ -338,12 +359,14 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+I used queueLock for all four queue methods and one lock per statistics counter. Each counter update and getter use the same lock for mutual exclusion. Separate locks reduce blocking, but need careful matching. The queue has its own lock so it does not block unrelated counter updates, and finally releases locks to allow progress. Default ReentrantLock is not fair, so bounded waiting is not guaranteed.
 
 | Critical section (variable / method) | Lock used | Why it needs protection |
 |---|---|---|
-| [e.g., `ReadyQueue.poll()`] | [lock name] | [reason] |
-| [...] | [...] | [...] |
+| ReadyQueue: list and map in add(), poll(), processOf(), snapshot() | queueLock | Keep queue access and iteration consistent. |
+| contextSwitchCount: incrementContextSwitch(), getContextSwitchCount() | contextLock | Prevent lost increments and protect reads. |
+| completedProcessCount: incrementCompletedProcess(), getCompletedProcessCount() | completedLock | Keep the completion count correct for shutdown. |
+| totalServiceTime: addServiceTime(), getTotalServiceTime() | serviceLock | Prevent lost service-time updates and protect reads. |
 
 ## Question 3: Busy Waiting vs Semaphore
 
@@ -353,7 +376,7 @@ Verification block of **my final version**:
 
 **Your Answer:** *(3-5 sentences)*
 
-[Write your answer here.]
+The starter repeatedly checks the queue with 20 ms sleeps, wasting CPU time. Its saved poll count was zero because the CPUs crashed. readyCount counts work permits: it starts at zero for an empty queue and becomes ten after the initial additions. acquire() blocks a CPU with no permit, and add() releases one permit. At shutdown, release(totalCPUs) sends three wake-up signals so CPUs can check completion and stop; without them, CPUs could wait forever.
 
 ## Question 4: Classical Problems and Deadlock
 
@@ -364,24 +387,24 @@ Verification block of **my final version**:
 **Your Answer:** *(3-5 sentences)*
 
 **Classical problem and roles**:
-[Name the problem; who is the producer, who is the consumer?]
+This is the producer-consumer problem. The main thread adds the first processes, while CPUs take them and add unfinished processes back.
 
 **Semaphores for a bounded queue (name and initial value)**:
-[Name the three semaphores and their initial values.]
+For a bounded queue, the initial values are empty = K, full = 0 and mutex = 1.
 
 **Deadlock scenario and prevention**:
-[Describe the scenario and the necessary condition you would break.]
+If a consumer holds mutex while waiting for full on an empty queue, the producer cannot get mutex to add work, causing deadlock. Waiting for full before taking mutex breaks this circular wait.
 
 ## Summary
 
 **Key concepts I understood through these questions:**
-1.
-2.
-3.
+1. A race condition can lose an update when threads share a counter.
+2. A mutex lock protects a critical section, and finally releases it safely.
+3. A semaphore blocks workers until work or a shutdown signal is available.
 
 **Concepts I need to study more:**
-1.
-2.
+1. Fair locks and bounded waiting.
+2. Deadlock prevention when several locks or semaphores are involved.
 
 ---
 
